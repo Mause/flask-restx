@@ -1117,6 +1117,35 @@ class WildcardFieldTest(BaseFieldTestMixin, FieldTestCase):
         assert result2 == result1
 
 
+class DictFieldTest(BaseFieldTestMixin, FieldTestCase):
+    field_class = partial(fields.Dict, fields.String)
+
+    def test_schema(self):
+        schema = self.field_class().schema()
+
+        assert schema == {
+            'type': 'object',
+            'additionalProperties': {
+                'type': 'string'
+            }
+        }
+
+
+class TupleFieldTest(BaseFieldTestMixin, FieldTestCase):
+    field_class = partial(fields.Tuple, [fields.String, fields.Integer])
+
+    def test_schema(self):
+        schema = self.field_class().schema()
+
+        assert schema == {
+            'type': 'array',
+            'items': [
+                {'type': 'string'},
+                {'type': 'integer'}
+            ]
+        }
+
+
 class ClassNameFieldTest(StringTestMixin, BaseFieldTestMixin, FieldTestCase):
     field_class = fields.ClassName
 

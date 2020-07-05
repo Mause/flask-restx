@@ -893,16 +893,16 @@ class Wildcard(Raw):
 
 
 class Tuple(Raw):
-    def __init__(self, items):
+    def __init__(self, items, **kwargs):
         self.items = [item() if isinstance(item, type) else item for item in items]
         self.__schema_example__ = [
             item.example or item.__schema_example__ for item in self.items
         ]
         self.__schema_type__ = 'array'
-        super().__init__()
+        super(Tuple, self).__init__(**kwargs)
 
     def schema(self):
-        schema = super().schema()
+        schema = super(Tuple, self).schema()
         schema.update({"items": [item.schema() for item in self.items]})
         return schema
 
