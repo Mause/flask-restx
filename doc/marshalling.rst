@@ -229,7 +229,7 @@ The simpler version of the :class:`~fields.Wildcard` field.
     >>> json.dumps(marshal(data, d))
     >>> '{"Jane": 68, "bob": 42, "John": 12}'
 
-Aside from the simpler usage, the Dict field will also generate correct swagger documentation.
+Aside from the simpler usage, the :class:`~fields.Dict` field will also generate simpler swagger documentation.
 It's not stateful at all, so feel free to define it inline.
 
 .. _tuple-field:
@@ -244,6 +244,8 @@ Tuple Field
     >>> data = (42, 'John')
     >>> json.dumps(marshal(data, d))
     >>> '[42, "John"]'
+
+The :class:`~fields.Tuple` will serialize and deserialize builtin tuples to lists in json.
 
 .. _wildcard-field:
 
