@@ -893,8 +893,12 @@ class Wildcard(Raw):
 
 
 class Tuple(Raw):
+    '''
+    :param items: The field types the tuple will contain.
+    '''
+
     __schema_type__ = 'array'
-    
+
     def __init__(self, items, **kwargs):
         self.items = [item() if isinstance(item, type) else item for item in items]
         self.__schema_example__ = [item.example for item in self.items]

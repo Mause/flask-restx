@@ -214,10 +214,41 @@ You can also unmarshal fields as lists ::
     >>> json.dumps(marshal(data, resource_fields))
     >>> '{"first_names": ["Emile", "Raoul"], "name": "Bougnazal"}'
 
+.. _dict-field:
+
+Dict Field
+----------
+
+    >>> from flask_restx import fields, marshal
+    >>> import json
+    >>> 
+    >>> d = fields.Dict(fields.Integer)
+    >>> data = {'John': 12, 'bob': 42, 'Jane': 68}
+    >>> json.dumps(marshal(data, d))
+    >>> '{"Jane": 68, "bob": 42, "John": 12}'
+
+Aside from the simpler usage, the Dict field will also generate correct swagger documentation.
+
+.. _tuple-field:
+
+Tuple Field
+----------
+
+    >>> from flask_restx import fields, marshal
+    >>> import json
+    >>> 
+    >>> d = fields.Tuple([fields.Integer, fields.String])
+    >>> data = (42, 'John')
+    >>> json.dumps(marshal(data, d))
+    >>> '[42, "John"]'
+
 .. _wildcard-field:
 
 Wildcard Field
 --------------
+
+.. note ::
+    You probably don't want to use a Wildcard field, in most simple cases the Dict field will do.
 
 If you don't know the name(s) of the field(s) you want to unmarshall, you can
 use :class:`~fields.Wildcard` ::
@@ -232,7 +263,7 @@ use :class:`~fields.Wildcard` ::
     >>> '{"Jane": "68", "bob": "42", "John": "12"}'
 
 The name you give to your :class:`~fields.Wildcard` acts as a real glob as
-shown bellow ::
+shown below ::
 
     >>> from flask_restx import fields, marshal
     >>> import json
