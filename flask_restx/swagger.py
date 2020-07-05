@@ -672,7 +672,7 @@ class Swagger(object):
                 self.register_model(model)
         elif isinstance(field, fields.Nested):
             self.register_model(field.nested)
-        elif isinstance(field, (fields.List, fields.Wildcard)):
+        elif isinstance(field, (fields.List, fields.Wildcard, fields.Dict)):
             self.register_field(field.container)
 
     def security_for(self, doc, method):

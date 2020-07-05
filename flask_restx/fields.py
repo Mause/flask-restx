@@ -890,3 +890,35 @@ class Wildcard(Raw):
         kwargs = self.__dict__.copy()
         model = kwargs.pop("container")
         return self.__class__(model, **kwargs)
+
+
+class Dict(Raw):
+    """
+    Field for marshalling list of "unknown" fields.
+    Alternative to Wildcard, considerably simpler
+
+    :param cls_or_instance: The field type the values of the dict will contain.
+    """
+
+    def __init__(self, cls_or_instance, **kwargs):
+        super(Dict, self).__init__(**kwargs)
+        error_msg = "The type of the dict elements must be a subclass of fields.Raw"
+        if isinstance(cls_or_instance, type):
+            if not issubclass(cls_or_instance, Raw):
+                raise MarshallingError(error_msg)
+            self.container = cls_or_instance()
+        else:
+            if not isinstance(cls_or_instance, Raw):
+                raise MarshallingError(error_msg)
+            self.container = cls_or_instance
+
+    def output(self, key, data, ordered=False):
+        data = get_value(key, data)
+
+        return {key: self.container.output(key, data) for key in data}
+
+    def schema(self):
+        schema = super(Dict, self).schema()
+        schema["type"] = "object"
+        schema["additionalProperties"] = self.container.__schema__
+        return schema
