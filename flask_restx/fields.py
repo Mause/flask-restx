@@ -897,9 +897,7 @@ from flask_restx.utils import not_none
 class Tuple(Raw):
     def __init__(self, items, **kwargs):
         self.items = [item() if isinstance(item, type) else item for item in items]
-        self.__schema_example__ = [
-            item.example or item.__schema_example__ for item in self.items
-        ]
+        self.__schema_example__ = [item.example for item in self.items]
         self.__schema_type__ = 'array'
         super(Tuple, self).__init__(**kwargs)
 
@@ -933,7 +931,7 @@ class Dict(Raw):
                 raise MarshallingError(error_msg)
             self.container = cls_or_instance
 
-        self.__schema_example__ = {'additionalProperty1': self.container.__schema_example__}
+        self.__schema_example__ = {'additionalProperty1': self.container.example}
 
         super(Dict, self).__init__(**kwargs)
 
