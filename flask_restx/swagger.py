@@ -674,6 +674,9 @@ class Swagger(object):
             self.register_model(field.nested)
         elif isinstance(field, (fields.List, fields.Wildcard, fields.Dict)):
             self.register_field(field.container)
+        elif isinstance(field, fields.Tuple):
+            for item in field.items:
+                self.register_field(item)
 
     def security_for(self, doc, method):
         security = None

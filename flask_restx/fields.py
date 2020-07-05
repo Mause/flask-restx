@@ -892,6 +892,26 @@ class Wildcard(Raw):
         return self.__class__(model, **kwargs)
 
 
+class Tuple(Raw):
+    def __init__(self, items):
+        self.items = [item() if isinstance(item, type) else item for item in items]
+        self.__schema_example__ = [
+            item.example or item.__schema_example__ for item in self.items
+        ]
+        self.__schema_type__ = 'array'
+        super().__init__()
+
+    def schema(self):
+        schema = super().schema()
+        schema.update({"items": [item.schema() for item in self.items]})
+        return schema
+
+    def output(self, key, data):
+        data = get_value(key, data)
+
+        return [field.output(idx, data) for idx, field in enumerate(self.items)]
+
+
 class Dict(Raw):
     """
     Field for marshalling list of "unknown" fields.
@@ -920,5 +940,5 @@ class Dict(Raw):
     def schema(self):
         schema = super(Dict, self).schema()
         schema["type"] = "object"
-        schema["additionalProperties"] = self.container.__schema__
+        schema["additionalProperties"] = self.container.schema()
         return schema
