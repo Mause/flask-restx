@@ -219,6 +219,8 @@ You can also unmarshal fields as lists ::
 Dict Field
 ----------
 
+The simpler version of the :class:`~fields.Wildcard` field.
+
     >>> from flask_restx import fields, marshal
     >>> import json
     >>> 
@@ -228,11 +230,12 @@ Dict Field
     >>> '{"Jane": 68, "bob": 42, "John": 12}'
 
 Aside from the simpler usage, the Dict field will also generate correct swagger documentation.
+It's not stateful at all, so feel free to define it inline.
 
 .. _tuple-field:
 
 Tuple Field
-----------
+-----------
 
     >>> from flask_restx import fields, marshal
     >>> import json
@@ -248,7 +251,7 @@ Wildcard Field
 --------------
 
 .. note ::
-    You probably don't want to use a Wildcard field, in most simple cases the Dict field will do.
+    You probably don't want to use a :class:`~fields.Wildcard` field, in most simple cases the :class:`~fields.Dict` field will do.
 
 If you don't know the name(s) of the field(s) you want to unmarshall, you can
 use :class:`~fields.Wildcard` ::
