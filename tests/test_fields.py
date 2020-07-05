@@ -1116,12 +1116,14 @@ class WildcardFieldTest(BaseFieldTestMixin, FieldTestCase):
         assert expected1 == result1
         assert result2 == result1
 
+from flask_restx.utils import not_none
+
 
 class DictFieldTest(BaseFieldTestMixin, FieldTestCase):
     field_class = partial(fields.Dict, fields.String('hello'))
 
     def test_schema(self):
-        schema = self.field_class().schema()
+        schema = not_none(self.field_class().schema())
 
         assert schema == {
             'type': 'object',
@@ -1136,7 +1138,7 @@ class TupleFieldTest(BaseFieldTestMixin, FieldTestCase):
     field_class = partial(fields.Tuple, [fields.String(example='hello world'), fields.Integer(example=1)])
 
     def test_schema(self):
-        schema = self.field_class().schema()
+        schema = not_none(self.field_class().schema())
 
         assert schema == {
             'type': 'array',

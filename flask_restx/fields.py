@@ -891,6 +891,8 @@ class Wildcard(Raw):
         model = kwargs.pop("container")
         return self.__class__(model, **kwargs)
 
+from flask_restx.utils import not_none
+
 
 class Tuple(Raw):
     def __init__(self, items, **kwargs):
@@ -903,7 +905,7 @@ class Tuple(Raw):
 
     def schema(self):
         schema = super(Tuple, self).schema()
-        schema.update({"items": [item.schema() for item in self.items]})
+        schema.update({"items": [not_none(item.schema()) for item in self.items]})
         return schema
 
     def output(self, key, data):
@@ -942,5 +944,5 @@ class Dict(Raw):
     def schema(self):
         schema = super(Dict, self).schema()
         schema["type"] = "object"
-        schema["additionalProperties"] = self.container.schema()
+        schema["additionalProperties"] = not_none(self.container.schema())
         return schema
