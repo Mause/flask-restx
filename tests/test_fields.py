@@ -1120,7 +1120,7 @@ from flask_restx.utils import not_none
 
 
 class DictFieldTest(BaseFieldTestMixin, FieldTestCase):
-    field_class = partial(fields.Dict, fields.String('hello'))
+    field_class = partial(fields.Dict, fields.String(example='hello'))
 
     def test_schema(self):
         schema = not_none(self.field_class().schema())
