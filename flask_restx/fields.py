@@ -932,6 +932,8 @@ class Dict(Raw):
                 raise MarshallingError(error_msg)
             self.container = cls_or_instance
 
+        self.__schema_example__ = {'additionalProperty1': self.container.__schema_example__}
+
     def output(self, key, data, ordered=False):
         data = get_value(key, data)
 
