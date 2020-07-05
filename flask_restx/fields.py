@@ -891,8 +891,6 @@ class Wildcard(Raw):
         model = kwargs.pop("container")
         return self.__class__(model, **kwargs)
 
-from flask_restx.utils import not_none
-
 
 class Tuple(Raw):
     __schema_type__ = 'array'
