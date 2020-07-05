@@ -923,7 +923,6 @@ class Dict(Raw):
     """
 
     def __init__(self, cls_or_instance, **kwargs):
-        super(Dict, self).__init__(**kwargs)
         error_msg = "The type of the dict elements must be a subclass of fields.Raw"
         if isinstance(cls_or_instance, type):
             if not issubclass(cls_or_instance, Raw):
@@ -935,6 +934,8 @@ class Dict(Raw):
             self.container = cls_or_instance
 
         self.__schema_example__ = {'additionalProperty1': self.container.__schema_example__}
+
+        super(Dict, self).__init__(**kwargs)
 
     def output(self, key, data, ordered=False):
         data = get_value(key, data)
