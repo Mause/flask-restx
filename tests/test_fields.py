@@ -1129,7 +1129,8 @@ class DictFieldTest(BaseFieldTestMixin, FieldTestCase):
             'type': 'object',
             'example': {'additionalProperty1': 'hello'},
             'additionalProperties': {
-                'type': 'string'
+                'type': 'string',
+                'example': 'hello'
             }
         }
 
@@ -1144,8 +1145,8 @@ class TupleFieldTest(BaseFieldTestMixin, FieldTestCase):
             'type': 'array',
             'example': ['hello world', 1],
             'items': [
-                {'type': 'string'},
-                {'type': 'integer'}
+                {'type': 'string', 'example': 'hello world'},
+                {'type': 'integer', 'example': 1}
             ]
         }
 
