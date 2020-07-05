@@ -895,10 +895,11 @@ from flask_restx.utils import not_none
 
 
 class Tuple(Raw):
+    __schema_type__ = 'array'
+    
     def __init__(self, items, **kwargs):
         self.items = [item() if isinstance(item, type) else item for item in items]
         self.__schema_example__ = [item.example for item in self.items]
-        self.__schema_type__ = 'array'
         super(Tuple, self).__init__(**kwargs)
 
     def schema(self):
