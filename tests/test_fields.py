@@ -1134,6 +1134,11 @@ class DictFieldTest(BaseFieldTestMixin, FieldTestCase):
             }
         }
 
+    def test_simple(self):
+        field = self.field_class()
+
+        self.assert_field(field, {"hello": "world"}, {"hello": "world"})
+
 
 class TupleFieldTest(BaseFieldTestMixin, FieldTestCase):
     field_class = partial(fields.Tuple, [fields.String(example='hello world'), fields.Integer(example=1)])
@@ -1149,6 +1154,11 @@ class TupleFieldTest(BaseFieldTestMixin, FieldTestCase):
                 {'type': 'integer', 'example': 1}
             ]
         }
+
+    def test_simple(self):
+        field = self.field_class()
+
+        self.assert_field(field, ("string", 1), ["string", 1])
 
 
 class ClassNameFieldTest(StringTestMixin, BaseFieldTestMixin, FieldTestCase):
