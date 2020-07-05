@@ -48,6 +48,8 @@ __all__ = (
     "MinMaxMixin",
     "NumberMixin",
     "MarshallingError",
+    "Dict",
+    "Tuple"
 )
 
 
